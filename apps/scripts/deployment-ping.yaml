@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nest-app
+  namespace: app2
+spec:
+  selector:
+    matchLabels:
+      app: app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      imagePullSecrets:
+      - name: ocirsecret
+      containers:
+      - name: app
+        image: iad.ocir.io/idmaqhrbiuyo/nest-ping:v0.1
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: 3000
+          initialDelaySeconds: 60
+          periodSeconds: 5
+          successThreshold: 2   
+        resources:
+          limits:
+            cpu: "256m" 
+            memory: 512Mi
+          requests:
+            cpu: "256m"
+            memory: "512Mi"

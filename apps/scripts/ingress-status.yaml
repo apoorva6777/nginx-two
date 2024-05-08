@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1  
+kind: Ingress
+metadata:
+  name: nest-app-new-ing
+  namespace: app1
+  annotations:
+    kubernetes.io/ingress.class: "nginx2"
+spec:
+  tls:
+  - secretName: tls-secret
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend: 
+          service:
+            name: nest-app-new-svc
+            port: 
+              number: 80

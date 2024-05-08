@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nest-app-new-svc
+  namespace: app1
+  labels:
+    app: app-new 
+spec:
+  type: ClusterIP
+  selector:
+    app: app-new
+  ports:
+  - name: http
+    port: 80 
+    targetPort: 3001
